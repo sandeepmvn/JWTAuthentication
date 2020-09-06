@@ -78,10 +78,12 @@ HMACSHA256(
   RequireHttpsMetadata is not used in the code snippet above, but is useful for testing purposes. In real-world deployments, JWT bearer tokens should always be passed only over HTTPS.
   
   TokenValidationParameters: -
+  
      1. The ValidateIssuerSigningKey,ValidateAudience and ValdiateIssuer properties indicate that the token’s signature should be validated and that the key’s property indicating it’s issuer/Audience must match an expected value.
+     
      2. The IssuerSigningKey is the secret key used for validating incoming JWT tokens
      
- 
+  
  In Configure Method add the authentication and authorization method,
   
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
