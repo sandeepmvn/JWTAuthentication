@@ -48,7 +48,13 @@ HMACSHA256(
        Microsoft.AspNetCore.Authentication.JwtBearer
        
   In Startup.cs, ConfigureService method add,
+  The AddAuthentication takes a AuthenticationOption parameter.it has 3 properties 
+    1. DefaultAuthenticateScheme 
+    2. DefaultChallengeScheme
+    3. DefaultScheme. 
+  These 3 are set to the default value of the AuthenticationScheme property in the JwtBearerAuthenticationOptions object, by the way this is "Bearer".
   
+ 
         services.AddAuthentication(options =>
       {
           options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,14 +73,49 @@ HMACSHA256(
           };
       });
       
-   Using AddJWTBearer extension method from the Microsoft.AspNetCore.Authentication.JwtBearer package,it takes a JwtBearerOptions parameter which specifies how to handle incoming tokens.
+   Using AddJWTBearer extension method from the Microsoft.AspNetCore.Authentication.JwtBearer package,it takes a JwtBearerOptions parameter which specifies how to handle incoming tokens (Handler for authorizing the token).
+   
   RequireHttpsMetadata is not used in the code snippet above, but is useful for testing purposes. In real-world deployments, JWT bearer tokens should always be passed only over HTTPS.
   
-      
+  TokenValidationParameters: -
+     1. The ValidateIssuerSigningKey,ValidateAudience and ValdiateIssuer properties indicate that the token’s signature should be validated and that the key’s property indicating it’s issuer/Audience must match an expected value.
+     2. The IssuerSigningKey is the secret key used for validating incoming JWT tokens
+     
+ 
+ In Configure Method add the authentication and authorization method,
+  
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+         {
+           //---- After the appuseRouting
+             app.UseAuthentication();
+             app.UseAuthorization();
 
-       
+           //----------------------------
+         }
+         
+   Now Generate the token with help of MVC controller,
    
- 
- 
+     {
+              // authentication successful so generate jwt token
+          var tokenHandler = new JwtSecurityTokenHandler();
+          var key = Encoding.ASCII.GetBytes("SecretKey");
+          var tokenDescriptor = new SecurityTokenDescriptor
+          {
+              Subject = new ClaimsIdentity(new Claim[]
+              {
+                  new Claim(ClaimTypes.Name, "Username"),
+                  new Claim(ClaimTypes.Role, "Role")
+              
+              }),
+              Expires = DateTime.UtcNow.AddDays(7),//Token Expiry date
+              SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+          };
+          var token = tokenHandler.CreateToken(tokenDescriptor);
+          var jwtToken = tokenHandler.WriteToken(token);
+       }
+  
 
-
+    Now decorate the some of actions/conroller(secure the API's) with [Authorize] attribute. Under the namespace of "Microsoft.AspNetCore.Authorization"  
+    
+    
+    
