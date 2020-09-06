@@ -47,10 +47,11 @@ HMACSHA256(
   Nuget Package Name: -
        Microsoft.AspNetCore.Authentication.JwtBearer
        
-  In Startup.cs, ConfigureService method add
+  In Startup.cs, ConfigureService method add,
+  
         services.AddAuthentication(options =>
       {
-          options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; //Bearer
+          options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
           options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
       })
       .AddJwtBearer(x =>
@@ -65,7 +66,10 @@ HMACSHA256(
               ValidateAudience = false,
           };
       });
-   Using AddJWTBearer extension method,   
+      
+   Using AddJWTBearer extension method from the Microsoft.AspNetCore.Authentication.JwtBearer package,it takes a JwtBearerOptions parameter which specifies how to handle incoming tokens.
+  RequireHttpsMetadata is not used in the code snippet above, but is useful for testing purposes. In real-world deployments, JWT bearer tokens should always be passed only over HTTPS.
+  
       
 
        
