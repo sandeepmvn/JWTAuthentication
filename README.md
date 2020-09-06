@@ -120,9 +120,11 @@ HMACSHA256(
  Now decorate the some of actions/conroller(secure the API's) with [Authorize] attribute. Under the namespace of "Microsoft.AspNetCore.Authorization".
  
  To get Claims information from current identity: -
+ 
  var claims = User.Claims.ToList();
  
  To get current logged-in username from claims:-
+ 
  var username=User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.Name)
  
  
