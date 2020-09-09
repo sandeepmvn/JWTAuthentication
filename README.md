@@ -19,17 +19,22 @@ Header Signature will be
   "typ": "JWT"
 }
 Then,this JSON header will be encoded into base64 (first part of the token).
+
 example:
+
   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 
 # PayLoad
 The second part of the token is payload, which contains the claims.Claims are statements about an entity (typically, the user) and additional data
-{
-  "sub": "1234567890",
-  "name": "John Doe",
-  "admin": true
-}
+
+    {
+      "sub": "1234567890",
+      "name": "John Doe",
+      "admin": true
+    }
+
 Then,this JSON payload will be encoded into base64.
+
 Note: Do note that for signed tokens this information, though protected against tampering, is readable by anyone. Do not put secret information in the payload or header elements of a JWT unless it is encrypted.
 
 # Signature
@@ -128,6 +133,11 @@ HMACSHA256(
  var username=User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.Name)
  
  
+ #JWT usage in ASP.NET MVC 
+ 1. With OAuth: -
+    https://drive.google.com/drive/folders/1HQwymRPuRT2vxesgc3EMff57HuDWWM-D?usp=sharing
+ 2. With MVC: -
+    https://drive.google.com/drive/folders/1jeUY5soQHICrfkgVd29TQtkJfpXQGA0m?usp=sharing
  
     
     
