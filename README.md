@@ -53,10 +53,15 @@ HMACSHA256(
        Microsoft.AspNetCore.Authentication.JwtBearer
        
   In Startup.cs, ConfigureService method add,
+  
   The AddAuthentication takes a AuthenticationOption parameter.it has 3 properties 
+  
     1. DefaultAuthenticateScheme 
+    
     2. DefaultChallengeScheme
+    
     3. DefaultScheme. 
+    
   These 3 are set to the default value of the AuthenticationScheme property in the JwtBearerAuthenticationOptions object, by the way this is "Bearer".
   
  
@@ -133,7 +138,7 @@ HMACSHA256(
  var username=User.Claims.FirstOrDefault(x=>x.Type==ClaimTypes.Name)
  
  
- #JWT usage in ASP.NET MVC 
+# JWT usage in ASP.NET MVC 
  1. With OAuth: -
     https://drive.google.com/drive/folders/1HQwymRPuRT2vxesgc3EMff57HuDWWM-D?usp=sharing
  2. With MVC: -
